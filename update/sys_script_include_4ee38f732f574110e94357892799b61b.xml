@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_58872_needit.GetUserCustomJson</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>This extension will return the customized user info as json formatted string</description>
+        <name>GetUserCustomJson</name>
+        <script><![CDATA[/*
+Server side
+1. Prepare the data you want to send to the client. Data can be contained in a simple object or an array.
+2. Instantiate a JSON object and encode the data to be sent.
+3. Return the data. The data sent to the client is in a JSON formatted string.
+Client side
+4. Retrieve the data
+5. Decode the JSON formatted string into an object or array, which contains multiple values.
+6. Process the values regarding the business requirements.
+*/
+var GetUserCustomJson = Class.create();
+GetUserCustomJson.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	
+	getUserJson: function(){
+		// Get User record for u_requested_for from form
+		var userRecord = new GlideRecord("sys_user");
+		userRecord.get(this.getParameter('sysparm_userID'));
+		// Prepare Json object
+		var obj = {};
+		obj.email = userRecord.email + '';
+		obj.title = userRecord.title + '';
+		// JSON formatted string
+		var json = new global.JSON();
+		var data = json.encode(obj);
+		
+		return data;
+	},
+
+    type: 'GetUserCustomJson'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-05-13 15:08:40</sys_created_on>
+        <sys_id>4ee38f732f574110e94357892799b61b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>GetUserCustomJson</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_include_4ee38f732f574110e94357892799b61b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-05-13 16:26:03</sys_updated_on>
+    </sys_script_include>
+</record_update>
